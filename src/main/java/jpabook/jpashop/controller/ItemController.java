@@ -61,17 +61,10 @@ public class ItemController {
         return "items/updateItemForm";
     }
 
+    //어설프게 controller에서 entity 생성하지 말것
     @PostMapping("items/{itemId}/edit")
-    public String updateItem(@ModelAttribute("form") BookForm form) {
-        Book book = new Book();
-        book.setId(form.getId());
-        book.setName(form.getName());
-        book.setPrice(form.getPrice());
-        book.setStockQuantity(form.getStockQuantity());
-        book.setAuthor(form.getAuthor());
-        book.setIsbn(form.getIsbn());
-
-        itemService.saveItem(book);
+    public String updateItem(@PathVariable Long itemId, @ModelAttribute("form") BookForm form) {
+        itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity());
         return "redirect:/items";
     }
 }
